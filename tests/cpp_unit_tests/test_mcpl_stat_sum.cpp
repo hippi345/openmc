@@ -92,7 +92,9 @@ TEST_CASE("MCPL stat:sum field")
 
     // Create empty particle bank
     std::vector<openmc::SourceSite> source_bank;
-    std::vector<int64_t> bank_index = {0};
+    // bank_index must have one entry per MPI rank plus a sentinel (see
+    // write_mcpl_source_bank_internal)
+    std::vector<int64_t> bank_index = {0, 0};
 
     // This should still create a valid MCPL file with stat:sum = 0
     openmc::write_mcpl_source_point(filename.c_str(), source_bank, bank_index);
